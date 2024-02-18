@@ -1,74 +1,32 @@
 import { createSchema, createYoga } from 'graphql-yoga';
 import { Database } from './classes/Database';
-import { UserModel } from './models/user';
+import schema from './schema';
+import { Query } from './queries';
+import { Mutation } from './mutation';
 
 new Database().start();
 
 const yoga = createYoga({
   schema: createSchema({
-    typeDefs: `
-      type Query {
-        allUsers: [User!]!
-      }
-
-      type Mutation {
-        createUser(data: CreateUserInput!): User!
-      }
-      
-      input CreateUserInput {
-        username: String!
-        password: String!
-        email: String!
-      }
-
-      type User {
-        id: ID!
-        username: String!
-        password: String!
-        email: String!
-      }
-
-      type Post {
-        id: ID!
-        postedBy: User!
-        content: String!
-        likes: [User!]!
-        dislikes: [User!]!
-        comments: [Comment!]!
-      }
-
-      type Comment {
-        id: ID!
-        user: User!
-        comment: String!
-        createdAt: Date!
-        updatedAt: Date!
-      }
-
-      scalar Date
-    `,
+    typeDefs: schema,
     resolvers: {
-      Query: {
-        allUsers: async () => await UserModel.find(),
-      },
-      Mutation: {
-        createUser: async (_, args) => {
-          const user = new UserModel(args.data);
-          await user.save();
-          return user;
-        },
-      },
+      Query,
+      Mutation,
     },
   }),
 });
 
-const server = Bun.serve({
-  fetch: yoga,
-});
+const init = () => {
+  const server = Bun.serve({
+    fetch: yoga,
+  });
 
-console.info(
-  `Server is running on ${new URL(
-    yoga.graphqlEndpoint,
-    `http://${server.hostname}:${server.port}`
-  )}`
-);
+  console.info(
+    `Server is running on ${new URL(
+      yoga.graphqlEndpoint,
+      `http://${server.hostname}:${server.port}`
+    )}`
+  );
+};
+
+init();
