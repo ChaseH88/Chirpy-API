@@ -10,6 +10,7 @@ type Mutation {
   createPostComment(data: CreatePostCommentInput!): String
   likePost(data: LikePostInput!): String
   dislikePost(data: DislikePostInput!): String
+  deleteUser(id: ID!): String
 }
 
 input CreateUserInput {
