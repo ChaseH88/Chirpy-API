@@ -1,4 +1,7 @@
 import { createSchema, createYoga } from 'graphql-yoga';
+import { Database } from './classes/Database';
+
+new Database().start();
 
 const yoga = createYoga({
   schema: createSchema({
