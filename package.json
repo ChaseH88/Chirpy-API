@@ -1,0 +1,20 @@
+{
+  "name": "social-media-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "bun --hot src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphql": "^16.8.1",
+    "graphql-yoga": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.0.6",
+    "@types/node": "^20.11.19"
+  }
+}
