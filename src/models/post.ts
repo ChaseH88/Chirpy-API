@@ -26,14 +26,15 @@ const PostSchema: Schema<PostModelInterface> = new Schema(
       {
         user: { type: Schema.Types.ObjectId, ref: 'UserModel', required: true },
         comment: { type: String, required: true },
-        createdAt: { type: Date, default: Date.now },
-        updatedAt: { type: Date, default: Date.now },
+      },
+      {
+        timestamps: true,
       },
     ],
   },
   { timestamps: true }
 );
 
-const PostModel = model<PostModelInterface>('Post', PostSchema);
+const PostModel = model<PostModelInterface>('PostModel', PostSchema);
 
 export { PostModel };

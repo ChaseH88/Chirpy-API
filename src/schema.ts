@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
   createUser(data: CreateUserInput!): User!
+  createPost(data: CreatePostInput!): Post!
 }
 
 input CreateUserInput {
@@ -13,11 +14,19 @@ input CreateUserInput {
   email: String!
 }
 
+input CreatePostInput {
+  postedBy: ID!
+  content: String!
+}
+
 type User {
   id: ID!
   username: String!
   password: String!
   email: String!
+  posts: [Post!]!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 type Post {
