@@ -11,6 +11,7 @@ type Mutation {
   likePost(data: LikePostInput!): String
   dislikePost(data: DislikePostInput!): String
   deleteUser(id: ID!): String
+  deletePost(id: ID!): String
 }
 
 input CreateUserInput {
