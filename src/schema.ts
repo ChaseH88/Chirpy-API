@@ -8,6 +8,7 @@ type Mutation {
   createPost(data: CreatePostInput!): Post!
   createPostComment(data: CreatePostCommentInput!): String
   likePost(data: LikePostInput!): String
+  dislikePost(data: DislikePostInput!): String
 }
 
 input CreateUserInput {
@@ -28,6 +29,11 @@ input CreatePostCommentInput {
 }
 
 input LikePostInput {
+  postId: ID!
+  userId: ID!
+}
+
+input DislikePostInput {
   postId: ID!
   userId: ID!
 }
