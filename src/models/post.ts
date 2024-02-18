@@ -26,9 +26,8 @@ const PostSchema: Schema<PostModelInterface> = new Schema(
       {
         user: { type: Schema.Types.ObjectId, ref: 'UserModel', required: true },
         comment: { type: String, required: true },
-      },
-      {
-        timestamps: true,
+        createdAt: { type: Date, default: Date.now },
+        updatedAt: { type: Date, default: Date.now },
       },
     ],
   },

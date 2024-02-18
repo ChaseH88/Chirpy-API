@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   createUser(data: CreateUserInput!): User!
   createPost(data: CreatePostInput!): Post!
+  createPostComment(data: CreatePostCommentInput!): String
 }
 
 input CreateUserInput {
@@ -17,6 +18,12 @@ input CreateUserInput {
 input CreatePostInput {
   postedBy: ID!
   content: String!
+}
+
+input CreatePostCommentInput {
+  postId: ID!
+  userId: ID!
+  comment: String!
 }
 
 type User {
