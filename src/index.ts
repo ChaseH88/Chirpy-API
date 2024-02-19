@@ -1,4 +1,5 @@
-import { createSchema, createYoga } from 'graphql-yoga';
+import { MaskError, createSchema, createYoga } from 'graphql-yoga';
+import { GraphQLError } from 'graphql';
 import { Database } from './classes/Database';
 import schema from './schema';
 import { Query } from './queries';
@@ -14,6 +15,9 @@ const yoga = createYoga({
       Mutation,
     },
   }),
+  maskedErrors: {
+    errorMessage: 'An error occurred',
+  },
 });
 
 const init = () => {
