@@ -4,6 +4,7 @@ import { createPostComment } from './create-post-comment';
 import { deletePost } from './delete-post';
 import { deleteUser } from './delete-user';
 import { likePost } from './like-post';
+import { login } from './login';
 
 export const Mutation = {
   createUser,
@@ -12,4 +13,5 @@ export const Mutation = {
   deletePost,
   deleteUser,
   likePost,
+  login,
 };

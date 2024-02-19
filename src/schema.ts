@@ -12,12 +12,18 @@ type Mutation {
   dislikePost(data: DislikePostInput!): String
   deleteUser(id: ID!): String
   deletePost(id: ID!): String
+  login(data: LoginInput!): User!
 }
 
 input CreateUserInput {
   username: String!
   password: String!
   email: String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
 }
 
 input CreatePostInput {
