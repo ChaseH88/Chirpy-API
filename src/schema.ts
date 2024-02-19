@@ -5,14 +5,14 @@ type Query {
 }
 
 type Mutation {
-  createUser(data: CreateUserInput!): User!
+  createUser(data: CreateUserInput!): AuthLogin!
   createPost(data: CreatePostInput!): Post!
   createPostComment(data: CreatePostCommentInput!): String
   likePost(data: LikePostInput!): String
   dislikePost(data: DislikePostInput!): String
   deleteUser(id: ID!): String
   deletePost(id: ID!): String
-  login(data: LoginInput!): User!
+  login(data: LoginInput!): AuthLogin!
 }
 
 input CreateUserInput {
@@ -55,6 +55,12 @@ type User {
   posts: [Post!]!
   createdAt: Date!
   updatedAt: Date!
+  token: String
+}
+
+type AuthLogin {
+  user: User!
+  token: String!
 }
 
 type Post {

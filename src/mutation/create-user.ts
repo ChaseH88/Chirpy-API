@@ -1,4 +1,5 @@
 import { UserModel } from '../models/user';
+import { signToken } from '../utilities/json-web-token';
 
 interface CreateUserInput {
   data: {
@@ -18,5 +19,7 @@ export const createUser = async (_, args: CreateUserInput) => {
   }
 
   const user = await UserModel.create(args.data);
-  return user.populate('posts');
+  const token = signToken(user.id);
+
+  return { token, user };
 };

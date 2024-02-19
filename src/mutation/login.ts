@@ -1,4 +1,5 @@
 import { UserModel } from '../models/user';
+import { signToken } from '../utilities/json-web-token';
 
 interface CreateUserInput {
   data: {
@@ -20,5 +21,7 @@ export const login = async (_, args: CreateUserInput) => {
     throw new Error('Invalid password');
   }
 
-  return existingUser;
+  const token = signToken(existingUser.id);
+
+  return { token, user: existingUser };
 };
