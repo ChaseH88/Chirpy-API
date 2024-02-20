@@ -71,6 +71,8 @@ type Post {
   likes: [User!]!
   dislikes: [User!]!
   comments: [Comment!]!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 type Comment {

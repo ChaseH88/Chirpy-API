@@ -1,5 +1,6 @@
 import { UserModel } from '../models/user';
 import { signToken } from '../utilities/json-web-token';
+import { hashPassword } from '../utilities/password';
 
 interface CreateUserInput {
   data: {
@@ -18,7 +19,13 @@ export const createUser = async (_, args: CreateUserInput) => {
     throw new Error('User already exists');
   }
 
-  const user = await UserModel.create(args.data);
+  const hashedPassword = await hashPassword(args.data.password);
+
+  const user = await UserModel.create({
+    ...args.data,
+    password: hashedPassword,
+  });
+
   const token = signToken(user.id);
 
   return { token, user };

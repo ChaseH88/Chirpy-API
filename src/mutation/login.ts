@@ -1,5 +1,6 @@
 import { UserModel } from '../models/user';
 import { signToken } from '../utilities/json-web-token';
+import { verifyPassword } from '../utilities/password';
 
 interface CreateUserInput {
   data: {
@@ -17,7 +18,12 @@ export const login = async (_, args: CreateUserInput) => {
     throw new Error('User does not exist');
   }
 
-  if (existingUser.password !== args.data.password) {
+  const validPassword = await verifyPassword(
+    args.data.password,
+    existingUser.password
+  );
+
+  if (!validPassword) {
     throw new Error('Invalid password');
   }
 

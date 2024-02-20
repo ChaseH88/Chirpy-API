@@ -18,5 +18,16 @@ export const currentUser = async (_, { token }: CurrentUserArgs) => {
     throw new Error('User not found');
   }
 
-  return currentUser.populate('posts');
+  return currentUser.populate({
+    path: 'posts',
+    populate: [
+      { path: 'postedBy' },
+      { path: 'likes' },
+      { path: 'dislikes' },
+      {
+        path: 'comments',
+        populate: { path: 'user' },
+      },
+    ],
+  });
 };
