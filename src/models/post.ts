@@ -1,5 +1,5 @@
-import { Document, Schema, model } from 'mongoose';
-import { UserModelInterface } from './user';
+import { Document, Schema, model } from "mongoose";
+import { UserModelInterface } from "./user";
 
 export interface PostModelInterface extends Document {
   postedBy: UserModelInterface;
@@ -11,20 +11,20 @@ export interface PostModelInterface extends Document {
     comment: string;
     createdAt: Date;
     updatedAt: Date;
-  };
+  }[];
   createdAt: Date;
   updatedAt: Date;
 }
 
 const PostSchema: Schema<PostModelInterface> = new Schema(
   {
-    postedBy: { type: Schema.Types.ObjectId, ref: 'UserModel', required: true },
+    postedBy: { type: Schema.Types.ObjectId, ref: "UserModel", required: true },
     content: { type: String, required: true },
-    likes: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }],
-    dislikes: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }],
+    likes: [{ type: Schema.Types.ObjectId, ref: "UserModel" }],
+    dislikes: [{ type: Schema.Types.ObjectId, ref: "UserModel" }],
     comments: [
       {
-        user: { type: Schema.Types.ObjectId, ref: 'UserModel', required: true },
+        user: { type: Schema.Types.ObjectId, ref: "UserModel", required: true },
         comment: { type: String, required: true },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
@@ -34,6 +34,6 @@ const PostSchema: Schema<PostModelInterface> = new Schema(
   { timestamps: true }
 );
 
-const PostModel = model<PostModelInterface>('PostModel', PostSchema);
+const PostModel = model<PostModelInterface>("PostModel", PostSchema);
 
 export { PostModel };

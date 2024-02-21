@@ -2,6 +2,7 @@ export default `
 type Query {
   allUsers: [User!]!
   allPosts: [Post!]!
+  trendingPosts: [Post!]!
   currentUser(token: String!): User!
 }
 
