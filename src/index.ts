@@ -1,11 +1,12 @@
-import { MaskError, createSchema, createYoga } from "graphql-yoga";
-import { GraphQLError } from "graphql";
+import { createSchema, createYoga, createPubSub } from "graphql-yoga";
 import { Database } from "./classes/Database";
 import schema from "./schema";
 import { Query } from "./queries";
 import { Mutation } from "./mutation";
 
 new Database().start();
+
+const pubSub = createPubSub();
 
 const yoga = createYoga({
   schema: createSchema({

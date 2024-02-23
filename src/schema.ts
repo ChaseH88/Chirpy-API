@@ -16,10 +16,7 @@ type Mutation {
   deleteUser(id: ID!): String
   deletePost(id: ID!): String
   login(data: LoginInput!): AuthLogin!
-}
-
-type Subscription {
-  allPostsFeed: [Post!]!
+  createGroup(data: CreateGroupInput!): Group!
 }
 
 input CreateUserInput {
@@ -100,6 +97,34 @@ type Comment {
   comment: String!
   createdAt: Date!
   updatedAt: Date!
+}
+
+type Group {
+  id: ID!
+  createdBy: User!
+  moderators: [User!]!
+  members: [User!]!
+  posts: [Post!]!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input CreateGroupInput {
+  name: String!
+  description: String
+  location: String
+  createdBy: ID!
+}
+
+input EditGroupInput {
+  moderators: [ID!]
+  members: [ID!]
+  posts: [ID!]
+}
+
+input DeleteGroupInput {
+  token: String!
+  groupId: ID!
 }
 
 scalar Date
