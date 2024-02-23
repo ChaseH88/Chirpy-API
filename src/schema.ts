@@ -8,6 +8,7 @@ type Query {
 
 type Mutation {
   createUser(data: CreateUserInput!): AuthLogin!
+  editUser(id: ID!, data: EditUserInput!): User!
   createPost(data: CreatePostInput!): Post!
   createPostComment(data: CreatePostCommentInput!): String
   likePost(data: LikePostInput!): String
@@ -17,10 +18,23 @@ type Mutation {
   login(data: LoginInput!): AuthLogin!
 }
 
+type Subscription {
+  allPostsFeed: [Post!]!
+}
+
 input CreateUserInput {
   username: String!
   password: String!
   email: String!
+}
+
+input EditUserInput {
+  email: String
+  username: String
+  firstName: String
+  lastName: String
+  bio: String
+  photo: String
 }
 
 input LoginInput {
@@ -53,6 +67,10 @@ type User {
   id: ID!
   username: String!
   password: String!
+  firstName: String
+  lastName: String
+  bio: String
+  photo: String
   email: String!
   posts: [Post!]!
   createdAt: Date!
