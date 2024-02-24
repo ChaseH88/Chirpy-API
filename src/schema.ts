@@ -18,6 +18,17 @@ type Mutation {
   login(data: LoginInput!): AuthLogin!
   createGroup(data: CreateGroupInput!): Group!
   editGroup(data: EditGroupInput!): Group!
+  editGroupUsers(data: EditGroupUsersInput!): Group!
+}
+
+enum EditGroupUsersType {
+  MODERATOR
+  MEMBER
+}
+
+enum EditGroupUsersAction {
+  ADD
+  REMOVE
 }
 
 input CreateUserInput {
@@ -122,6 +133,13 @@ input EditGroupInput {
   name: String
   description: String
   location: String
+}
+
+input EditGroupUsersInput {
+  groupId: ID!
+  userId: [ID!]!
+  type: EditGroupUsersType!
+  action: EditGroupUsersAction!
 }
 
 input DeleteGroupInput {
