@@ -95,4 +95,4 @@ const seeder = async (params: SeederParams) => {
   }
 };
 
-seeder({ userCount: 10, groupCount: 3, postCount: 50 });
+seeder({ userCount: 20, groupCount: 7, postCount: 150 });
