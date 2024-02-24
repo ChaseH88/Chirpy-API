@@ -17,6 +17,7 @@ type Mutation {
   deletePost(id: ID!): String
   login(data: LoginInput!): AuthLogin!
   createGroup(data: CreateGroupInput!): Group!
+  editGroup(data: EditGroupInput!): Group!
 }
 
 input CreateUserInput {
@@ -117,9 +118,10 @@ input CreateGroupInput {
 }
 
 input EditGroupInput {
-  moderators: [ID!]
-  members: [ID!]
-  posts: [ID!]
+  id: ID!
+  name: String
+  description: String
+  location: String
 }
 
 input DeleteGroupInput {

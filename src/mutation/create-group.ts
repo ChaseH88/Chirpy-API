@@ -32,6 +32,7 @@ export const createGroup = async (
   };
 
   const group = await GroupModel.create(newGroup);
+  await currentUser.updateOne({ $push: { groups: group._id } });
 
   return group.populate("createdBy");
 };

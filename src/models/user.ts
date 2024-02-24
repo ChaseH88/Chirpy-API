@@ -1,5 +1,6 @@
 import { Document, Schema, model } from "mongoose";
 import { PostModelInterface } from "./post";
+import { GroupModelInterface } from "./group";
 
 export interface UserModelInterface extends Document {
   email: string;
@@ -10,6 +11,7 @@ export interface UserModelInterface extends Document {
   bio: string;
   photo: string;
   posts: PostModelInterface[];
+  groups: GroupModelInterface[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,6 +26,7 @@ const UserSchema: Schema<UserModelInterface> = new Schema(
     bio: { type: String },
     photo: { type: String, default: "DEFAULT" },
     posts: [{ type: Schema.Types.ObjectId, ref: "PostModel" }],
+    groups: [{ type: Schema.Types.ObjectId, ref: "GroupModel" }],
   },
   { timestamps: true }
 );
