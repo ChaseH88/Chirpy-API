@@ -25,8 +25,8 @@ const UserSchema: Schema<UserModelInterface> = new Schema(
     lastName: { type: String },
     bio: { type: String },
     photo: { type: String, default: "DEFAULT" },
-    posts: [{ type: Schema.Types.ObjectId, ref: "PostModel" }],
-    groups: [{ type: Schema.Types.ObjectId, ref: "GroupModel" }],
+    posts: [{ type: Schema.Types.ObjectId, ref: "PostModel", default: [] }],
+    groups: [{ type: Schema.Types.ObjectId, ref: "GroupModel", default: [] }],
   },
   { timestamps: true }
 );
