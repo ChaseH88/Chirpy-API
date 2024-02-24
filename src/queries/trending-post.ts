@@ -8,8 +8,8 @@ const calculatePostScore = (
   dislikesCount: number
 ): number => {
   const commentWeight = 2;
-  const likeWeight = 1.5;
-  const dislikeWeight = -2;
+  const likeWeight = 1.75;
+  const dislikeWeight = -2.5;
 
   return (
     commentsCount * commentWeight +
@@ -52,12 +52,15 @@ export const trendingPosts = async () => {
     const commentsCount = post.comments.length;
     const likesCount = post.likes.length;
     const dislikesCount = post.dislikes.length;
-
+    const totalEngagement = commentsCount + likesCount + dislikesCount * 0.25;
     scores.push({
       post,
-      score: calculatePostScore(commentsCount, likesCount, dislikesCount),
+      score:
+        calculatePostScore(commentsCount, likesCount, dislikesCount) +
+        totalEngagement,
     });
   });
+
   return (
     scores
       ?.sort((a, b) => b.score - a.score)
