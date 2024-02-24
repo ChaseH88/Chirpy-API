@@ -1,12 +1,11 @@
-import { createSchema, createYoga, createPubSub } from "graphql-yoga";
+import { createSchema, createYoga } from "graphql-yoga";
 import { Database } from "./classes/Database";
 import schema from "./schema";
 import { Query } from "./queries";
 import { Mutation } from "./mutation";
+import { apiContext } from "./context";
 
 new Database().start();
-
-const pubSub = createPubSub();
 
 const yoga = createYoga({
   schema: createSchema({
@@ -16,6 +15,7 @@ const yoga = createYoga({
       Mutation,
     },
   }),
+  context: apiContext,
 });
 
 const init = () => {
