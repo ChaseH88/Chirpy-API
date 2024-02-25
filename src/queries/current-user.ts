@@ -1,25 +1,18 @@
 import { UserModel } from '../models/user';
 import { decodeToken } from '../utilities/json-web-token';
 import { GraphQLError } from 'graphql';
+import { isAuthenticated } from '../utilities/is-authenticated';
+import { Context } from '../context';
 
-interface CurrentUserArgs {
-  token: string;
-}
-
-export const currentUser = async (_, { token }: CurrentUserArgs) => {
-  const args = decodeToken(token);
-
-  if (!args?.userId) {
-    throw new GraphQLError('Invalid token');
-  }
-
-  const currentUser = await UserModel.findById(args.userId);
-
-  if (!currentUser) {
+export const currentUser = isAuthenticated(async (_, __: any, ctx: Context) => {
+  if (!ctx.currentUser?.id) {
     throw new GraphQLError('User not found');
   }
 
-  return currentUser.populate({
+  const currentUser = await UserModel.findById(ctx.currentUser.id);
+
+  // Optionally populate related data
+  return currentUser!.populate({
     path: 'posts',
     populate: [
       { path: 'postedBy' },
@@ -31,4 +24,4 @@ export const currentUser = async (_, { token }: CurrentUserArgs) => {
       },
     ],
   });
-};
+});

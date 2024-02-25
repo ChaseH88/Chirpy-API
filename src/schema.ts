@@ -3,7 +3,7 @@ type Query {
   allUsers: [User!]!
   allPosts(nextToken: Int, limit: Int): PaginatedPosts!
   trendingPosts: [Post!]!
-  currentUser(token: String!): User!
+  currentUser: User!
 }
 
 type Mutation {
