@@ -58,7 +58,6 @@ input LoginInput {
 }
 
 input CreatePostInput {
-  postedBy: ID!
   content: String!
 }
 

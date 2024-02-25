@@ -1,25 +1,26 @@
+import { Context } from '../context';
 import { PostModel } from '../models/post';
 import { UserModel } from '../models/user';
 
 interface CreatePostArgs {
   data: {
-    postedBy: string;
     content: string;
   };
 }
 
 export const createPost = async (
   _,
-  { data: { postedBy, content } }: CreatePostArgs
+  { data: { content } }: CreatePostArgs,
+  ctx: Context
 ) => {
-  const currentUser = await UserModel.findById(postedBy);
+  const currentUser = await UserModel.findById(ctx.currentUser.id);
 
   if (!currentUser) {
     throw new Error('User not found');
   }
 
   const post = await PostModel.create({
-    postedBy,
+    postedBy: currentUser.id,
     content,
     likes: [],
     dislikes: [],

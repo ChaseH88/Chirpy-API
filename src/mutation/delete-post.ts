@@ -1,3 +1,4 @@
+import { Context } from 'vm';
 import { PostModel } from '../models/post';
 import { UserModel } from '../models/user';
 
@@ -5,11 +6,21 @@ interface DeletePostInput {
   id: string;
 }
 
-export const deletePost = async (_, { id }: DeletePostInput) => {
+export const deletePost = async (_, { id }: DeletePostInput, ctx: Context) => {
   const foundPost = await PostModel.findById(id);
 
   if (!foundPost) {
     throw new Error('Post not found');
+  }
+
+  const currentUser = await UserModel.findById(ctx.currentUser.id);
+
+  if (!currentUser) {
+    throw new Error('User not found');
+  }
+
+  if (foundPost.postedBy.toString() !== currentUser.id.toString()) {
+    throw new Error('You are not authorized to delete this post');
   }
 
   await UserModel.updateMany(
