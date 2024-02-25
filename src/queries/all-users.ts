@@ -1,9 +1,12 @@
-import { UserModel } from '../models/user';
+import { UserModel } from "../models/user";
+import { isAuthenticated } from "../utilities/is-authenticated";
 
-export const allUsers = async () =>
-  await UserModel.find()
-    .populate({
-      path: 'posts',
-      model: 'PostModel',
-    })
-    .select('-password');
+export const allUsers = isAuthenticated(
+  async () =>
+    await UserModel.find()
+      .populate({
+        path: "posts",
+        model: "PostModel",
+      })
+      .select("-password")
+);

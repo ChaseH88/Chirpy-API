@@ -1,6 +1,7 @@
-import { PostModel } from '../models/post';
-import { UserModel } from '../models/user';
-import { GraphQLError } from 'graphql';
+import { PostModel } from "../models/post";
+import { UserModel } from "../models/user";
+import { GraphQLError } from "graphql";
+import { isAuthenticated } from "../utilities/is-authenticated";
 
 interface DislikePostArgs {
   data: {
@@ -9,58 +10,57 @@ interface DislikePostArgs {
   };
 }
 
-export const dislikePost = async (
-  _,
-  { data: { postId, userId } }: DislikePostArgs
-) => {
-  const currentUser = await UserModel.findById(userId);
+export const dislikePost = isAuthenticated(
+  async (_, { data: { postId, userId } }: DislikePostArgs) => {
+    const currentUser = await UserModel.findById(userId);
 
-  if (!currentUser) {
-    throw new GraphQLError('User not found');
-  }
+    if (!currentUser) {
+      throw new GraphQLError("User not found");
+    }
 
-  const post = await PostModel.findById(postId);
+    const post = await PostModel.findById(postId);
 
-  if (!post) {
-    throw new GraphQLError('Post not found');
-  }
+    if (!post) {
+      throw new GraphQLError("Post not found");
+    }
 
-  if (post.likes.includes(userId as any)) {
-    await PostModel.updateOne(
-      {
-        id: postId,
-      },
-      {
-        $pull: {
-          likes: userId,
+    if (post.likes.includes(userId as any)) {
+      await PostModel.updateOne(
+        {
+          id: postId,
         },
-      }
-    );
-  }
+        {
+          $pull: {
+            likes: userId,
+          },
+        }
+      );
+    }
 
-  if (post.dislikes.includes(userId as any)) {
+    if (post.dislikes.includes(userId as any)) {
+      await PostModel.updateOne(
+        {
+          id: postId,
+        },
+        {
+          $pull: {
+            dislikes: userId,
+          },
+        }
+      );
+      return "Post undisliked";
+    }
+
     await PostModel.updateOne(
       {
         id: postId,
       },
       {
-        $pull: {
+        $push: {
           dislikes: userId,
         },
       }
     );
-    return 'Post undisliked';
+    return "You dislike this post!";
   }
-
-  await PostModel.updateOne(
-    {
-      id: postId,
-    },
-    {
-      $push: {
-        dislikes: userId,
-      },
-    }
-  );
-  return 'You dislike this post!';
-};
+);

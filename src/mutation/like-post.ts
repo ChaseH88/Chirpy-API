@@ -1,6 +1,7 @@
-import { PostModel } from '../models/post';
-import { UserModel } from '../models/user';
-import { GraphQLError } from 'graphql';
+import { PostModel } from "../models/post";
+import { UserModel } from "../models/user";
+import { GraphQLError } from "graphql";
+import { isAuthenticated } from "../utilities/is-authenticated";
 
 interface LikePostArgs {
   data: {
@@ -9,55 +10,54 @@ interface LikePostArgs {
   };
 }
 
-export const likePost = async (
-  _,
-  { data: { postId, userId } }: LikePostArgs
-) => {
-  const currentUser = await UserModel.findById(userId);
+export const likePost = isAuthenticated(
+  async (_, { data: { postId, userId } }: LikePostArgs) => {
+    const currentUser = await UserModel.findById(userId);
 
-  if (!currentUser) {
-    throw new GraphQLError('User not found');
-  }
+    if (!currentUser) {
+      throw new GraphQLError("User not found");
+    }
 
-  const post = await PostModel.findById(postId);
+    const post = await PostModel.findById(postId);
 
-  if (!post) {
-    throw new GraphQLError('Post not found');
-  }
+    if (!post) {
+      throw new GraphQLError("Post not found");
+    }
 
-  if (post.dislikes.includes(userId as any)) {
-    await PostModel.updateOne(
-      {
-        _id: postId,
-      },
-      {
-        $pull: {
-          dislikes: userId,
+    if (post.dislikes.includes(userId as any)) {
+      await PostModel.updateOne(
+        {
+          _id: postId,
         },
-      }
-    );
-  }
+        {
+          $pull: {
+            dislikes: userId,
+          },
+        }
+      );
+    }
 
-  if (post.likes.includes(userId as any)) {
+    if (post.likes.includes(userId as any)) {
+      await PostModel.updateOne(
+        { _id: postId },
+        {
+          $pull: {
+            likes: userId,
+          },
+        }
+      );
+      return "Post unliked";
+    }
+
     await PostModel.updateOne(
       { _id: postId },
       {
-        $pull: {
+        $push: {
           likes: userId,
         },
       }
     );
-    return 'Post unliked';
+
+    return "You like this post!";
   }
-
-  await PostModel.updateOne(
-    { _id: postId },
-    {
-      $push: {
-        likes: userId,
-      },
-    }
-  );
-
-  return 'You like this post!';
-};
+);
