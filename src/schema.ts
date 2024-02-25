@@ -5,6 +5,9 @@ type Query {
   allGroups: [Group!]!
   trendingPosts: [Post!]!
   currentUser: User!
+  findUser(id: ID!): User!
+  findGroup(id: ID!): Group!
+  findPost(id: ID!): Post!
 }
 
 type Mutation {
