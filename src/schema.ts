@@ -2,6 +2,7 @@ export default `
 type Query {
   allUsers: [User!]!
   allPosts(nextToken: Int, limit: Int): PaginatedPosts!
+  allGroups: [Group!]!
   trendingPosts: [Post!]!
   currentUser: User!
 }
