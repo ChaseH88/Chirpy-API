@@ -22,7 +22,7 @@ type Mutation {
 }
 
 type PaginatedPosts {
-  posts: [Post!]!
+  items: [Post!]!
   nextToken: String
   totalCount: Int
 }
