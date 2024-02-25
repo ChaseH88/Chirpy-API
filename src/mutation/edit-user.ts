@@ -11,14 +11,13 @@ interface EditUserInput {
 }
 
 export const editUser = async (_, args: EditUserInput, ctx: Context) => {
-  const currentUser = await UserModel.findById(ctx.currentUser.id);
   const userToEdit = await UserModel.findById(args.id);
 
   if (!userToEdit) {
     throw new Error('User not found');
   }
 
-  if (currentUser?.id !== userToEdit.id) {
+  if (ctx?.currentUser?.id !== userToEdit.id) {
     throw new Error('You are not authorized to edit this user');
   }
 
