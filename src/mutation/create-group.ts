@@ -1,6 +1,7 @@
-import { GroupModel } from "../models/group";
-import { PostModel } from "../models/post";
-import { UserModel } from "../models/user";
+import { GraphQLError } from 'graphql';
+import { GroupModel } from '../models/group';
+import { PostModel } from '../models/post';
+import { UserModel } from '../models/user';
 
 interface CreateGroupArgs {
   data: {
@@ -18,7 +19,7 @@ export const createGroup = async (
   const currentUser = await UserModel.findById(createdBy);
 
   if (!currentUser) {
-    throw new Error("User not found");
+    throw new GraphQLError('User not found');
   }
 
   const newGroup = {
@@ -34,5 +35,5 @@ export const createGroup = async (
   const group = await GroupModel.create(newGroup);
   await currentUser.updateOne({ $push: { groups: group._id } });
 
-  return group.populate("createdBy");
+  return group.populate('createdBy');
 };

@@ -1,6 +1,7 @@
 import { UserModel } from '../models/user';
 import { signToken } from '../utilities/json-web-token';
 import { verifyPassword } from '../utilities/password';
+import { GraphQLError } from 'graphql';
 
 interface CreateUserInput {
   data: {
@@ -15,7 +16,7 @@ export const login = async (_, args: CreateUserInput) => {
   });
 
   if (!existingUser) {
-    throw new Error('User does not exist');
+    throw new GraphQLError('User does not exist');
   }
 
   const validPassword = await verifyPassword(
@@ -24,7 +25,7 @@ export const login = async (_, args: CreateUserInput) => {
   );
 
   if (!validPassword) {
-    throw new Error('Invalid password');
+    throw new GraphQLError('Invalid password');
   }
 
   const token = signToken(existingUser.id);

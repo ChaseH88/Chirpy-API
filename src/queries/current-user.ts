@@ -1,5 +1,6 @@
 import { UserModel } from '../models/user';
 import { decodeToken } from '../utilities/json-web-token';
+import { GraphQLError } from 'graphql';
 
 interface CurrentUserArgs {
   token: string;
@@ -9,13 +10,13 @@ export const currentUser = async (_, { token }: CurrentUserArgs) => {
   const args = decodeToken(token);
 
   if (!args?.userId) {
-    throw new Error('Invalid token');
+    throw new GraphQLError('Invalid token');
   }
 
   const currentUser = await UserModel.findById(args.userId);
 
   if (!currentUser) {
-    throw new Error('User not found');
+    throw new GraphQLError('User not found');
   }
 
   return currentUser.populate({

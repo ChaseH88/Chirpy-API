@@ -1,6 +1,7 @@
 import { UserModel } from '../models/user';
 import { signToken } from '../utilities/json-web-token';
 import { hashPassword } from '../utilities/password';
+import { GraphQLError } from 'graphql';
 
 interface CreateUserInput {
   data: {
@@ -16,7 +17,7 @@ export const createUser = async (_, args: CreateUserInput) => {
   });
 
   if (existingUser) {
-    throw new Error('User already exists');
+    throw new GraphQLError('User already exists');
   }
 
   const hashedPassword = await hashPassword(args.data.password);

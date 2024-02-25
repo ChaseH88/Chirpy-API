@@ -1,5 +1,6 @@
 import { PostModel } from '../models/post';
 import { UserModel } from '../models/user';
+import { GraphQLError } from 'graphql';
 
 interface DislikePostArgs {
   data: {
@@ -15,13 +16,13 @@ export const dislikePost = async (
   const currentUser = await UserModel.findById(userId);
 
   if (!currentUser) {
-    throw new Error('User not found');
+    throw new GraphQLError('User not found');
   }
 
   const post = await PostModel.findById(postId);
 
   if (!post) {
-    throw new Error('Post not found');
+    throw new GraphQLError('Post not found');
   }
 
   if (post.likes.includes(userId as any)) {

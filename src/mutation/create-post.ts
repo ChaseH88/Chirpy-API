@@ -1,6 +1,7 @@
 import { Context } from '../context';
 import { PostModel } from '../models/post';
 import { UserModel } from '../models/user';
+import { GraphQLError } from 'graphql';
 
 interface CreatePostArgs {
   data: {
@@ -16,7 +17,7 @@ export const createPost = async (
   const currentUser = await UserModel.findById(ctx.currentUser.id);
 
   if (!currentUser) {
-    throw new Error('User not found');
+    throw new GraphQLError('User not found');
   }
 
   const post = await PostModel.create({

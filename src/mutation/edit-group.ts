@@ -1,6 +1,7 @@
-import { GroupModel } from "../models/group";
-import { PostModel } from "../models/post";
-import { UserModel } from "../models/user";
+import { GroupModel } from '../models/group';
+import { PostModel } from '../models/post';
+import { UserModel } from '../models/user';
+import { GraphQLError } from 'graphql';
 
 interface EditGroupArgs {
   data: {
@@ -18,7 +19,7 @@ export const editGroup = async (
   const post = await PostModel.findById(id);
 
   if (!post) {
-    throw new Error("Post not found");
+    throw new GraphQLError('Post not found');
   }
 
   return await PostModel.findByIdAndUpdate(id, {
