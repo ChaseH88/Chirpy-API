@@ -27,7 +27,7 @@ export const dislikePost = isAuthenticated(
     if (post.likes.includes(userId as any)) {
       await PostModel.updateOne(
         {
-          id: postId,
+          _id: postId,
         },
         {
           $pull: {
@@ -40,7 +40,7 @@ export const dislikePost = isAuthenticated(
     if (post.dislikes.includes(userId as any)) {
       await PostModel.updateOne(
         {
-          id: postId,
+          _id: postId,
         },
         {
           $pull: {
@@ -53,7 +53,7 @@ export const dislikePost = isAuthenticated(
 
     await PostModel.updateOne(
       {
-        id: postId,
+        _id: postId,
       },
       {
         $push: {
