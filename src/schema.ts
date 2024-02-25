@@ -1,7 +1,7 @@
 export default `
 type Query {
   allUsers: [User!]!
-  allPosts: [Post!]!
+  allPosts(nextToken: Int, limit: Int): PaginatedPosts!
   trendingPosts: [Post!]!
   currentUser(token: String!): User!
 }
@@ -19,6 +19,12 @@ type Mutation {
   createGroup(data: CreateGroupInput!): Group!
   editGroup(data: EditGroupInput!): Group!
   editGroupUsers(data: EditGroupUsersInput!): Group!
+}
+
+type PaginatedPosts {
+  posts: [Post!]!
+  nextToken: String
+  totalCount: Int
 }
 
 enum EditGroupUsersType {
@@ -81,7 +87,7 @@ type User {
   bio: String
   photo: String
   email: String!
-  posts: [Post!]!
+  posts: [Post!]
   createdAt: Date!
   updatedAt: Date!
   token: String
