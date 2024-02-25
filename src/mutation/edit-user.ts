@@ -10,13 +10,13 @@ interface EditUserInput {
 }
 
 export const editUser = async (_, args: EditUserInput) => {
-  console.log(args);
-
   const existingUser = await UserModel.findById(args.id);
 
   if (!existingUser) {
     throw new Error("User not found");
   }
 
-  return await UserModel.findByIdAndUpdate(args.id, args.data);
+  return await UserModel.findByIdAndUpdate(args.id, args.data, {
+    new: true,
+  }).populate("posts");
 };
