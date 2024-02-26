@@ -2,6 +2,7 @@ import { GroupModel } from "../models/group";
 import { UserModel } from "../models/user";
 import { GraphQLError } from "graphql";
 import { isAuthenticated } from "../utilities/is-authenticated";
+import { Context } from "../context";
 
 interface EditGroupUsersArgs {
   data: {
@@ -15,10 +16,17 @@ interface EditGroupUsersArgs {
 export const editGroupUsers = isAuthenticated(
   async (
     _,
-    { data: { groupId, userId, type, action } }: EditGroupUsersArgs
+    { data: { groupId, userId, type, action } }: EditGroupUsersArgs,
+    { currentUser }: Context
   ) => {
-    if (!(await GroupModel.findById(groupId))) {
+    const group = await GroupModel.findById(groupId);
+
+    if (!group) {
       throw new GraphQLError("Group not found");
+    }
+
+    if (!group.moderators.includes(currentUser.id)) {
+      throw new GraphQLError("You are not authorized to edit this group");
     }
 
     if (!(await UserModel.find({ _id: { $in: userId } }))) {
