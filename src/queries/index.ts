@@ -6,6 +6,7 @@ import { allGroups } from './all-groups';
 import { findUser } from './find-user';
 import { findPost } from './find-post';
 import { findGroup } from './find-group';
+import { search } from './search';
 
 export const Query = {
   allUsers,
@@ -16,4 +17,5 @@ export const Query = {
   findUser,
   findPost,
   findGroup,
+  search,
 };

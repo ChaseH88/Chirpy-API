@@ -8,6 +8,8 @@ type Query {
   findUser(id: ID!): User!
   findGroup(id: ID!): Group!
   findPost(id: ID!): Post!
+  # update search to accept an array of types
+  search(search: String!, type: [SearchType!]!): SearchResults!
 }
 
 type Mutation {
@@ -25,10 +27,22 @@ type Mutation {
   editGroupUsers(data: EditGroupUsersInput!): Group!
 }
 
+type SearchResults {
+  users: [User!]
+  posts: [Post!]
+  groups: [Group!]
+}
+
 type PaginatedPosts {
   items: [Post!]!
   nextToken: String
   totalCount: Int
+}
+
+enum SearchType {
+  USER
+  POST
+  GROUP
 }
 
 enum EditGroupUsersType {
