@@ -151,7 +151,6 @@ input CreateGroupInput {
   name: String!
   description: String
   location: String
-  createdBy: ID!
 }
 
 input EditGroupInput {
