@@ -18,18 +18,27 @@ export const search = isAuthenticated(
     }
 
     const searchPattern = { $regex: search, $options: 'i' };
-    let users: any,
-      posts: any,
+    let users: any = [],
+      posts: any = [],
       groups: any = [];
 
     if (type.includes('USER')) {
-      users = await UserModel.find({
-        $or: [
-          { username: searchPattern },
-          { email: searchPattern },
-          { name: searchPattern },
-        ],
-      }).select('-password');
+      const found = await UserModel.aggregate([
+        {
+          $addFields: {
+            fullName: { $concat: ['$firstName', ' ', '$lastName'] },
+          },
+        },
+        {
+          $match: {
+            $or: [{ username: searchPattern }, { fullName: searchPattern }],
+          },
+        },
+        {
+          $project: { password: 0 },
+        },
+      ]);
+      users = found.map((user: any) => ({ ...user, id: user._id }));
     }
 
     if (type.includes('POST')) {
