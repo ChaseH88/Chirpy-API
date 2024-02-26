@@ -122,6 +122,9 @@ type Comment {
 
 type Group {
   id: ID!
+  name: String!
+  description: String
+  location: String
   createdBy: User!
   moderators: [User!]!
   members: [User!]!
