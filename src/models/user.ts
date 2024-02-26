@@ -3,6 +3,7 @@ import { PostModelInterface } from "./post";
 import { GroupModelInterface } from "./group";
 
 export interface UserModelInterface extends Document {
+  _id: string;
   email: string;
   password: string;
   username: string;

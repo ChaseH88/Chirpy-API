@@ -8,7 +8,6 @@ type Query {
   findUser(id: ID!): User!
   findGroup(id: ID!): Group!
   findPost(id: ID!): Post!
-  # update search to accept an array of types
   search(search: String!, type: [SearchType!]!): SearchResults!
 }
 
@@ -25,6 +24,7 @@ type Mutation {
   createGroup(data: CreateGroupInput!): Group!
   editGroup(data: EditGroupInput!): Group!
   editGroupUsers(data: EditGroupUsersInput!): Group!
+  deleteGroup(groupId: ID!): String
 }
 
 type SearchResults {
