@@ -25,7 +25,14 @@ type Mutation {
   editGroup(data: EditGroupInput!): Group!
   editGroupUsers(data: EditGroupUsersInput!): Group!
   deleteGroup(groupId: ID!): String
+  sendMessage(data: SendMessageInput!): Message!
 }
+
+type Subscription {
+  messageSent: Message!
+}
+
+union MessageTo = User | Group
 
 type SearchResults {
   users: [User!]
@@ -108,6 +115,29 @@ type User {
   createdAt: Date!
   updatedAt: Date!
   token: String
+}
+
+type Message {
+  id: ID!
+  fromId: User!
+  toId: MessageTo!
+  type: MessageType!
+  content: String!
+  likes: [User!]!
+  dislikes: [User!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input SendMessageInput {
+  toId: ID!
+  type: MessageType!
+  content: String!
+}
+
+enum MessageType {
+  PRIVATE
+  GROUP
 }
 
 type AuthLogin {
