@@ -16,7 +16,7 @@ export interface MessageModelInterface extends Document {
 const MessageSchema: Schema<MessageModelInterface> = new Schema(
   {
     fromId: { type: Schema.Types.ObjectId, ref: "UserModel", required: true },
-    toId: { type: Schema.Types.Mixed, required: true },
+    toId: { type: Schema.Types.ObjectId, required: true },
     content: { type: String, required: true },
     type: { type: String, enum: ["PRIVATE", "GROUP"], required: true },
     likes: [{ type: Schema.Types.ObjectId, ref: "UserModel" }],

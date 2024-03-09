@@ -4,7 +4,7 @@ type Query {
   allPosts(nextToken: Int, limit: Int): PaginatedPosts!
   allGroups: [Group!]!
   trendingPosts: [Post!]!
-  currentUser: User!
+  currentUser: CurrentUserReturn!
   findUser(id: ID!): User!
   findGroup(id: ID!): Group!
   findPost(id: ID!): Post!
@@ -102,6 +102,11 @@ input DislikePostInput {
   userId: ID!
 }
 
+type CurrentUserReturn {
+  user: User!
+  messages: [Message!]
+}
+
 type User {
   id: ID!
   username: String!
@@ -120,7 +125,7 @@ type User {
 type Message {
   id: ID!
   fromId: User!
-  toId: MessageTo!
+  toId: User!
   type: MessageType!
   content: String!
   likes: [User!]!
