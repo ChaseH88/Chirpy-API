@@ -102,9 +102,16 @@ input DislikePostInput {
   userId: ID!
 }
 
+type PostData {
+  likes: [Post!]
+  dislikes: [Post!]
+  comments: [Post!]
+}
+
 type CurrentUserReturn {
   user: User!
   messages: [Message!]
+  posts: PostData!
 }
 
 type User {
