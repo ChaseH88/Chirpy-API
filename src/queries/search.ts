@@ -24,11 +24,10 @@ export const search = isAuthenticated(
       groups: any = [];
 
     if (type.includes("USER")) {
-      let found = [];
       if (searchAll) {
-        found = await UserModel.find({}).select("-password");
+        users = await UserModel.find({}).select("-password");
       } else {
-        found = await UserModel.aggregate([
+        const found = await UserModel.aggregate([
           {
             $addFields: {
               fullName: { $concat: ["$firstName", " ", "$lastName"] },
@@ -43,8 +42,8 @@ export const search = isAuthenticated(
             $project: { password: 0 },
           },
         ]);
+        users = found.map((user: any) => ({ ...user, id: user._id }));
       }
-      users = found.map((user: any) => ({ ...user, id: user._id }));
     }
 
     if (type.includes("POST")) {
