@@ -11,6 +11,7 @@ import { createGroup } from "./create-group";
 import { editGroupUsers } from "./edit-group-users";
 import { deleteGroup } from "./delete-group";
 import { sendMessage } from "./send-message";
+import { deleteMessage } from "./delete-message";
 
 export const Mutation = {
   createUser,
@@ -26,4 +27,5 @@ export const Mutation = {
   editGroupUsers,
   deleteGroup,
   sendMessage,
+  deleteMessage,
 };

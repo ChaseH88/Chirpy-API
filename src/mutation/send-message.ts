@@ -4,6 +4,7 @@ import { GraphQLError } from "graphql";
 import { isAuthenticated } from "../utilities/is-authenticated";
 import { Context } from "vm";
 import { GroupModel } from "../models/group";
+import { newMessageSent } from "../subscription/constants";
 
 interface SendMessageArgs {
   data: {
@@ -42,7 +43,7 @@ export const sendMessage = isAuthenticated(
       content,
     });
 
-    pubSub.publish(`message:${toUser.id}`, {
+    pubSub.publish(newMessageSent(toUser.id), {
       message: message.populate("fromId"),
     });
 

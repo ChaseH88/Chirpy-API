@@ -26,6 +26,7 @@ type Mutation {
   editGroupUsers(data: EditGroupUsersInput!): Group!
   deleteGroup(groupId: ID!): String
   sendMessage(data: SendMessageInput!): Message!
+  deleteMessage(id: ID!): String
 }
 
 type Subscription {
