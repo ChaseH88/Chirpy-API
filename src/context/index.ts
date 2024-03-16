@@ -1,4 +1,4 @@
-import { createPubSub } from "graphql-yoga";
+import { PubSub, createPubSub } from "graphql-yoga";
 import { UserModel, UserModelInterface } from "../models/user";
 import { decodeToken } from "../utilities/json-web-token";
 
@@ -17,7 +17,7 @@ export interface Context {
     | "createdAt"
     | "updatedAt"
   >;
-  pubSub: typeof pubSub;
+  pubSub: PubSub<any>;
 }
 
 export const apiContext = async (req: any) => {
