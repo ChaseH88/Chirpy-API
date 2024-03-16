@@ -12,6 +12,10 @@ export interface PostModelInterface extends Document {
     createdAt: Date;
     updatedAt: Date;
   }[];
+  history: {
+    content: string;
+    editedAt: Date;
+  }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +32,12 @@ const PostSchema: Schema<PostModelInterface> = new Schema(
         comment: { type: String, required: true },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
+      },
+    ],
+    history: [
+      {
+        content: { type: String, required: true },
+        editedAt: { type: Date, default: Date.now },
       },
     ],
   },
