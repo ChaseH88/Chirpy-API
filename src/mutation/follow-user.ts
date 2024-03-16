@@ -1,5 +1,6 @@
 import { Context } from "../context";
 import { UserModel } from "../models/user";
+import { newFollower } from "../subscription/constants";
 import { isAuthenticated } from "../utilities/is-authenticated";
 import { GraphQLError } from "graphql";
 
@@ -32,6 +33,12 @@ export const followUser = isAuthenticated(
             $pull: { following: userId },
           }
     );
+
+    if (!isFollowing) {
+      ctx.pubSub.publish(newFollower(userExists!.id), {
+        follower: user,
+      });
+    }
 
     return `You have ${!isFollowing ? "followed" : "unfollowed"} ${
       userExists?.username

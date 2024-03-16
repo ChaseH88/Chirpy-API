@@ -33,6 +33,7 @@ type Mutation {
 
 type Subscription {
   messageSent: Message!
+  newFollower: User!
 }
 
 union MessageTo = User | Group
