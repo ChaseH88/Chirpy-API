@@ -5,7 +5,10 @@ import { decodeToken } from "../utilities/json-web-token";
 const pubSub = createPubSub();
 
 export interface Context {
-  currentUser: Pick<
+  currentUser: {
+    following: string[];
+    blocked: string[];
+  } & Pick<
     UserModelInterface,
     | "id"
     | "email"

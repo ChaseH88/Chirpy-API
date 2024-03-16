@@ -27,6 +27,8 @@ type Mutation {
   deleteGroup(groupId: ID!): String
   sendMessage(data: SendMessageInput!): Message!
   deleteMessage(id: ID!): String
+  followUser(userId: ID!): String!
+  blockUser(userId: ID!): String!
 }
 
 type Subscription {
@@ -125,6 +127,9 @@ type User {
   photo: String
   email: String!
   posts: [Post!]
+  following: [User!]
+  followers: [User!]
+  blocked: [User!]
   createdAt: Date!
   updatedAt: Date!
   token: String

@@ -10,18 +10,24 @@ export const currentUser = isAuthenticated(async (_, __: any, ctx: Context) => {
     throw new GraphQLError("User not found");
   }
 
-  const currentUser = await UserModel.findById(ctx.currentUser.id).populate({
-    path: "posts",
-    populate: [
-      { path: "postedBy" },
-      { path: "likes" },
-      { path: "dislikes" },
-      {
-        path: "comments",
-        populate: { path: "user" },
-      },
-    ],
-  });
+  const currentUser = await UserModel.findById(ctx.currentUser.id).populate([
+    { path: "following" },
+    { path: "blocked" },
+    {
+      path: "posts",
+      populate: [
+        { path: "postedBy" },
+        { path: "likes" },
+        { path: "dislikes" },
+        {
+          path: "comments",
+          populate: { path: "user" },
+        },
+      ],
+    },
+  ]);
+
+  const followers = await UserModel.find({ following: currentUser!.id });
 
   const messages = await MessageModel.find({
     $or: [{ fromId: currentUser!.id }, { toId: currentUser!.id }],
@@ -75,7 +81,11 @@ export const currentUser = isAuthenticated(async (_, __: any, ctx: Context) => {
   }
 
   return {
-    user: currentUser,
+    user: {
+      ...(currentUser as any)._doc,
+      id: currentUser!.id,
+      followers,
+    },
     messages,
     posts,
   };
