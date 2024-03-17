@@ -6,6 +6,7 @@ type Query {
   trendingPosts: [Post!]!
   currentUser: CurrentUserReturn!
   findUser(id: ID!): User!
+  findUserByUsername(username: String!): User!
   findGroup(id: ID!): Group!
   findPost(id: ID!): Post!
   search(search: String!, type: [SearchType!]!): SearchResults!
