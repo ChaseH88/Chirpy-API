@@ -1,5 +1,5 @@
-import { PostModel } from '../models/post';
-import { paginate } from '../utilities/pagination';
+import { PostModel } from "../models/post";
+import { paginate } from "../utilities/pagination";
 
 interface PaginationInput {
   nextToken?: string;
@@ -11,13 +11,22 @@ export const allPosts = async (_, { nextToken, limit }: PaginationInput) =>
     model: PostModel,
     paginationInput: { nextToken, limit },
     populate: [
-      { path: 'postedBy', model: 'UserModel', select: '-password' },
-      { path: 'likes', model: 'UserModel', select: '-password' },
-      { path: 'dislikes', model: 'UserModel', select: '-password' },
       {
-        path: 'comments',
-        model: 'CommentModel',
-        populate: { path: 'user', model: 'UserModel', select: '-password' },
+        path: "postedBy",
+        model: "UserModel",
+        select: "-password",
+        populate: {
+          path: "following followers blocked",
+          model: "UserModel",
+          select: "-password",
+        },
+      },
+      { path: "likes", model: "UserModel", select: "-password" },
+      { path: "dislikes", model: "UserModel", select: "-password" },
+      {
+        path: "comments",
+        model: "CommentModel",
+        populate: { path: "user", model: "UserModel", select: "-password" },
       },
     ],
   });

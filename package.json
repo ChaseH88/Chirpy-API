@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "bun --hot src/index.ts"
+    "start": "bun --hot src/index.ts",
+    "seed": "bun --hot src/seeder/seeder.ts"
   },
   "keywords": [],
   "author": "",

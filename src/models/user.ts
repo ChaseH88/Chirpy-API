@@ -13,6 +13,9 @@ export interface UserModelInterface extends Document {
   photo: string;
   posts: PostModelInterface[];
   groups: GroupModelInterface[];
+  following: UserModelInterface[];
+  followers: UserModelInterface[];
+  blocked: UserModelInterface[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +31,9 @@ const UserSchema: Schema<UserModelInterface> = new Schema(
     photo: { type: String, default: "DEFAULT" },
     posts: [{ type: Schema.Types.ObjectId, ref: "PostModel", default: [] }],
     groups: [{ type: Schema.Types.ObjectId, ref: "GroupModel", default: [] }],
+    following: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
+    followers: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
+    blocked: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
   },
   { timestamps: true }
 );

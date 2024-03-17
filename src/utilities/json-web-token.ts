@@ -1,3 +1,4 @@
+import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "default-secret-key";
@@ -16,7 +17,6 @@ export const decodeToken = (
     const decoded = jwt.verify(token, JWT_SECRET);
     return decoded as { userId: string };
   } catch (error) {
-    console.error("Token verification failed:", error);
-    return null;
+    throw new GraphQLError("Token verification failed");
   }
 };

@@ -4,8 +4,9 @@ type Query {
   allPosts(nextToken: Int, limit: Int): PaginatedPosts!
   allGroups: [Group!]!
   trendingPosts: [Post!]!
-  currentUser: User!
+  currentUser: CurrentUserReturn!
   findUser(id: ID!): User!
+  findUserByUsername(username: String!): User!
   findGroup(id: ID!): Group!
   findPost(id: ID!): Post!
   search(search: String!, type: [SearchType!]!): SearchResults!
@@ -25,7 +26,18 @@ type Mutation {
   editGroup(data: EditGroupInput!): Group!
   editGroupUsers(data: EditGroupUsersInput!): Group!
   deleteGroup(groupId: ID!): String
+  sendMessage(data: SendMessageInput!): Message!
+  deleteMessage(id: ID!): String
+  followUser(userId: ID!): String!
+  blockUser(userId: ID!): String!
 }
+
+type Subscription {
+  messageSent: Message!
+  newFollower: User!
+}
+
+union MessageTo = User | Group
 
 type SearchResults {
   users: [User!]
@@ -95,6 +107,18 @@ input DislikePostInput {
   userId: ID!
 }
 
+type PostData {
+  likes: [Post!]
+  dislikes: [Post!]
+  comments: [Post!]
+}
+
+type CurrentUserReturn {
+  user: User!
+  messages: [Message!]
+  posts: PostData!
+}
+
 type User {
   id: ID!
   username: String!
@@ -105,9 +129,35 @@ type User {
   photo: String
   email: String!
   posts: [Post!]
+  following: [User!]
+  followers: [User!]
+  blocked: [User!]
   createdAt: Date!
   updatedAt: Date!
   token: String
+}
+
+type Message {
+  id: ID!
+  fromId: User!
+  toId: User!
+  type: MessageType!
+  content: String!
+  likes: [User!]!
+  dislikes: [User!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input SendMessageInput {
+  toId: ID!
+  type: MessageType!
+  content: String!
+}
+
+enum MessageType {
+  PRIVATE
+  GROUP
 }
 
 type AuthLogin {

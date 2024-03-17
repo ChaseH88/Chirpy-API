@@ -3,6 +3,7 @@ import { Database } from "./classes/Database";
 import schema from "./schema";
 import { Query } from "./queries";
 import { Mutation } from "./mutation";
+import { Subscription } from "./subscription";
 import { apiContext } from "./context";
 
 new Database().start();
@@ -13,6 +14,7 @@ const yoga = createYoga({
     resolvers: {
       Query,
       Mutation,
+      Subscription,
     },
   }),
   context: apiContext,
