@@ -17,31 +17,36 @@ export const followUser = isAuthenticated(
     }
     const isFollowing = ctx.currentUser?.following.includes(userId);
 
-    const userExists = await UserModel.findById(userId);
+    const userToFollow = await UserModel.findById(userId);
 
-    if (!userExists) {
+    if (!userToFollow) {
       throw new GraphQLError("User not found");
     }
 
-    const user = await UserModel.findByIdAndUpdate(
-      ctx.currentUser.id,
-      !isFollowing
-        ? {
-            $push: { following: userId },
-          }
-        : {
-            $pull: { following: userId },
-          }
-    );
-
-    if (!isFollowing) {
-      ctx.pubSub.publish(newFollower(userExists!.id), {
-        follower: user,
+    if (isFollowing) {
+      await UserModel.findByIdAndUpdate(ctx.currentUser.id, {
+        $pull: { following: userId },
       });
+
+      await UserModel.findByIdAndUpdate(userId, {
+        $pull: { followers: ctx.currentUser.id },
+      });
+
+      return `You have unfollowed ${userToFollow?.username}`;
     }
 
-    return `You have ${!isFollowing ? "followed" : "unfollowed"} ${
-      userExists?.username
-    }`;
+    const user = await UserModel.findByIdAndUpdate(ctx.currentUser.id, {
+      $push: { following: userId },
+    });
+
+    await UserModel.findByIdAndUpdate(userId, {
+      $push: { followers: ctx.currentUser.id },
+    });
+
+    ctx.pubSub.publish(newFollower(userToFollow!.id), {
+      follower: user,
+    });
+
+    return `You have followed ${userToFollow?.username}`;
   }
 );

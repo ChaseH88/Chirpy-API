@@ -12,6 +12,7 @@ export const currentUser = isAuthenticated(async (_, __: any, ctx: Context) => {
 
   const currentUser = await UserModel.findById(ctx.currentUser.id).populate([
     { path: "following" },
+    { path: "followers" },
     { path: "blocked" },
     {
       path: "posts",
@@ -26,8 +27,6 @@ export const currentUser = isAuthenticated(async (_, __: any, ctx: Context) => {
       ],
     },
   ]);
-
-  const followers = await UserModel.find({ following: currentUser!.id });
 
   const messages = await MessageModel.find({
     $or: [{ fromId: currentUser!.id }, { toId: currentUser!.id }],
@@ -81,11 +80,7 @@ export const currentUser = isAuthenticated(async (_, __: any, ctx: Context) => {
   }
 
   return {
-    user: {
-      ...(currentUser as any)._doc,
-      id: currentUser!.id,
-      followers,
-    },
+    user: currentUser,
     messages,
     posts,
   };

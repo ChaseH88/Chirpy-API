@@ -14,6 +14,9 @@ export const findUserByUsername = isAuthenticated(
           path: "following",
         },
         {
+          path: "followers",
+        },
+        {
           path: "blocked",
         },
         {
@@ -35,14 +38,6 @@ export const findUserByUsername = isAuthenticated(
       throw new GraphQLError("User not found");
     }
 
-    const followers = await UserModel.find({
-      following: user!.id,
-    });
-
-    return {
-      ...(user as any)._doc,
-      id: user!.id,
-      followers,
-    };
+    return user;
   }
 );
