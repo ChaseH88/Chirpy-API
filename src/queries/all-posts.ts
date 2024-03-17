@@ -16,7 +16,7 @@ export const allPosts = async (_, { nextToken, limit }: PaginationInput) =>
         model: "UserModel",
         select: "-password",
         populate: {
-          path: "following",
+          path: "following followers blocked",
           model: "UserModel",
           select: "-password",
         },
