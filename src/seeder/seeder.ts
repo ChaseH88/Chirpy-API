@@ -4,9 +4,10 @@ import { UserModel } from "../models/user";
 import { groupFaker } from "./group-faker";
 import { postFaker } from "./post-faker";
 import { userFaker } from "./user-faker";
-import { Database } from "../classes/database";
+import { Database } from "../classes/Database";
 import { hashPassword } from "../utilities/password";
 import { commentFaker } from "./comment-faker";
+import { MessageModel } from "../models/message";
 
 type SeederParams = {
   userCount: number;
@@ -19,6 +20,7 @@ const defaultUser = async () =>
     email: "chase@test.com",
     username: "chase",
     password: await hashPassword("chase"),
+    role: "SUPER_ADMIN",
   });
 
 const seeder = async (params: SeederParams) => {
@@ -28,6 +30,7 @@ const seeder = async (params: SeederParams) => {
     await UserModel.deleteMany({});
     await GroupModel.deleteMany({});
     await PostModel.deleteMany({});
+    await MessageModel.deleteMany({});
 
     const users = Array.from({ length: params.userCount - 1 }, (_, i) => i).map(
       () => userFaker()

@@ -17,6 +17,7 @@ type UserFakerParams = {
   groups?: string[];
   username?: string;
   password?: string;
+  role?: "USER" | "SUPER_ADMIN";
   email?: string;
 };
 
@@ -31,4 +32,5 @@ export const userFaker = (params?: UserFakerParams) => ({
   photo: faker.helpers.arrayElement(photoOptions),
   posts: params?.posts || [],
   groups: params?.groups || [],
+  role: params?.role || "USER",
 });
