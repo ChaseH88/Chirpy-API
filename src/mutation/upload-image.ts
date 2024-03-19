@@ -26,7 +26,7 @@ export const uploadImage = isAuthenticated(
 
       const form = new FormData();
       form.append("image", file, file.name);
-      form.append("key", "ba9062784bebc834473fda6205a0d844");
+      form.append("key", process.env.IMG_BB_API_KEY as string);
 
       const response = await fetch("https://api.imgbb.com/1/upload", {
         method: "POST",
