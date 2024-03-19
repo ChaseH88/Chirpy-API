@@ -132,6 +132,7 @@ type User {
   posts: [Post!]
   following: [User!]
   followers: [User!]
+  images: [Image!]
   blocked: [User!]
   createdAt: Date!
   updatedAt: Date!
@@ -148,6 +149,18 @@ type Message {
   dislikes: [User!]!
   createdAt: String!
   updatedAt: String!
+}
+
+type Image {
+  id: ID!
+  name: String!
+  imageUrl: String!
+  thumbnailUrl: String!
+  deleteUrl: String!
+  uploadedBy: User!
+  size: Int!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 input SendMessageInput {

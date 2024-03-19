@@ -14,6 +14,7 @@ export const currentUser = isAuthenticated(async (_, __: any, ctx: Context) => {
     { path: "following" },
     { path: "followers" },
     { path: "blocked" },
+    { path: "images" },
     {
       path: "posts",
       populate: [
