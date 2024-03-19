@@ -30,6 +30,7 @@ type Mutation {
   deleteMessage(id: ID!): String
   followUser(userId: ID!): String!
   blockUser(userId: ID!): String!
+  uploadImage(file: Upload!): String!
 }
 
 type Subscription {
@@ -223,4 +224,5 @@ input DeleteGroupInput {
 }
 
 scalar Date
+scalar Upload
 `;

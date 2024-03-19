@@ -13,6 +13,7 @@ import { deleteGroup } from "./delete-group";
 import { sendMessage } from "./send-message";
 import { deleteMessage } from "./delete-message";
 import { followUser } from "./follow-user";
+import { uploadImage } from "./upload-image";
 
 export const Mutation = {
   createUser,
@@ -30,4 +31,5 @@ export const Mutation = {
   sendMessage,
   deleteMessage,
   followUser,
+  uploadImage,
 };

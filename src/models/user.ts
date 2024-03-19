@@ -1,6 +1,7 @@
 import { Document, Schema, model } from "mongoose";
 import { PostModelInterface } from "./post";
 import { GroupModelInterface } from "./group";
+import { ImageModelInterface } from "./image";
 
 export interface UserModelInterface extends Document {
   _id: string;
@@ -16,6 +17,7 @@ export interface UserModelInterface extends Document {
   following: UserModelInterface[];
   followers: UserModelInterface[];
   blocked: UserModelInterface[];
+  images: ImageModelInterface[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -33,6 +35,7 @@ const UserSchema: Schema<UserModelInterface> = new Schema(
     groups: [{ type: Schema.Types.ObjectId, ref: "GroupModel", default: [] }],
     following: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
     followers: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
+    images: [{ type: Schema.Types.ObjectId, ref: "ImageModel", default: [] }],
     blocked: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
   },
   { timestamps: true }
