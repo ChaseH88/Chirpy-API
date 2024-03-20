@@ -18,6 +18,8 @@ export interface UserModelInterface extends Document {
   followers: UserModelInterface[];
   blocked: UserModelInterface[];
   images: ImageModelInterface[];
+  showNotifications: boolean;
+  role: "USER" | "SUPER_ADMIN";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -37,6 +39,8 @@ const UserSchema: Schema<UserModelInterface> = new Schema(
     followers: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
     images: [{ type: Schema.Types.ObjectId, ref: "ImageModel", default: [] }],
     blocked: [{ type: Schema.Types.ObjectId, ref: "UserModel", default: [] }],
+    showNotifications: { type: Boolean, default: true },
+    role: { type: String, enum: ["USER", "SUPER_ADMIN"], default: "USER" },
   },
   { timestamps: true }
 );
