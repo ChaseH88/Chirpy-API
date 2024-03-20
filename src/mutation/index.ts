@@ -10,6 +10,7 @@ import { login } from "./login";
 import { createGroup } from "./create-group";
 import { editGroupUsers } from "./edit-group-users";
 import { deleteGroup } from "./delete-group";
+import { deleteImage } from "./delete-image";
 import { sendMessage } from "./send-message";
 import { deleteMessage } from "./delete-message";
 import { followUser } from "./follow-user";
@@ -28,6 +29,7 @@ export const Mutation = {
   createGroup,
   editGroupUsers,
   deleteGroup,
+  deleteImage,
   sendMessage,
   deleteMessage,
   followUser,

@@ -26,6 +26,7 @@ type Mutation {
   editGroup(data: EditGroupInput!): Group!
   editGroupUsers(data: EditGroupUsersInput!): Group!
   deleteGroup(groupId: ID!): String
+  deleteImage(imageId: ID!): String
   sendMessage(data: SendMessageInput!): Message!
   deleteMessage(id: ID!): String
   followUser(userId: ID!): String!

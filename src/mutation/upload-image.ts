@@ -10,8 +10,6 @@ interface UploadImageInput {
 
 export const uploadImage = isAuthenticated(
   async (_, { file }: UploadImageInput, ctx: Context) => {
-    console.log("file", file);
-
     try {
       const user = await UserModel.findById(ctx.currentUser?.id);
       if (!user) {
@@ -32,6 +30,8 @@ export const uploadImage = isAuthenticated(
         method: "POST",
         body: form,
       });
+
+      console.log("response", response);
 
       if (!response.ok) {
         throw new GraphQLError("Failed to upload image to Imgbb");
@@ -54,7 +54,6 @@ export const uploadImage = isAuthenticated(
 
       return "Image uploaded successfully";
     } catch (error) {
-      console.error("Error uploading image:", error);
       return "Error uploading image";
     }
   }
