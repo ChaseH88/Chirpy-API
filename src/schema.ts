@@ -32,6 +32,7 @@ type Mutation {
   followUser(userId: ID!): String!
   blockUser(userId: ID!): String!
   uploadImage(file: Upload!): String!
+  readMessages(messageIds: [ID!]!): String!
 }
 
 type Subscription {
@@ -148,6 +149,8 @@ type Message {
   content: String!
   likes: [User!]!
   dislikes: [User!]!
+  hasRead: Boolean!
+  readAt: Date
   createdAt: String!
   updatedAt: String!
 }

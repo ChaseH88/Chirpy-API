@@ -15,6 +15,7 @@ import { sendMessage } from "./send-message";
 import { deleteMessage } from "./delete-message";
 import { followUser } from "./follow-user";
 import { uploadImage } from "./upload-image";
+import { readMessages } from "./read-messages";
 
 export const Mutation = {
   createUser,
@@ -34,4 +35,5 @@ export const Mutation = {
   deleteMessage,
   followUser,
   uploadImage,
+  readMessages,
 };

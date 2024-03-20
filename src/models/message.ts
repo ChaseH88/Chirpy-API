@@ -9,6 +9,8 @@ export interface MessageModelInterface extends Document {
   content: string;
   likes: UserModelInterface[];
   dislikes: UserModelInterface[];
+  hasRead: boolean;
+  readAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +23,8 @@ const MessageSchema: Schema<MessageModelInterface> = new Schema(
     type: { type: String, enum: ["PRIVATE", "GROUP"], required: true },
     likes: [{ type: Schema.Types.ObjectId, ref: "UserModel" }],
     dislikes: [{ type: Schema.Types.ObjectId, ref: "UserModel" }],
+    hasRead: { type: Boolean, default: false },
+    readAt: { type: Date, default: null },
   },
   { timestamps: true }
 );
